@@ -1,31 +1,61 @@
 /* EG DOORS – aukštos durys. Paprastas JavaScript, be bibliotekų. */
 
 /* ------------------------------------------------------------------
-   1. GIDO NUORODA
-   Įrašykite čia savo Google formos adresą tarp kabučių, pvz.:
-   const GOOGLE_FORMOS_NUORODA = "https://forms.gle/xxxxxxxx";
-   Kol čia tuščia, mygtukas tiesiog atidaro PDF gidą.
+   1. GIDO FORMA
+   Formos duomenys keliauja į /api/gidas ir iš ten laišku į info@egdoors.lt.
+   Lankytojas iš karto gauna nuorodą į PDF gidą.
 ------------------------------------------------------------------- */
-const GOOGLE_FORMOS_NUORODA = "";
-
 const GIDO_FAILAS = "gidas-7-klausimai-gamintojui.pdf";
 
-document.querySelectorAll(".js-gidas").forEach(function (m) {
-  if (GOOGLE_FORMOS_NUORODA) {
-    m.setAttribute("href", GOOGLE_FORMOS_NUORODA);
-  } else {
-    // Kol formos nėra, mygtukas tiesiog atidaro PDF gidą
-    m.setAttribute("href", GIDO_FAILAS);
-  }
-  m.setAttribute("target", "_blank");
-  m.setAttribute("rel", "noopener");
-});
+const forma = document.getElementById("gidoForma");
+const zinute = document.getElementById("gidoZinute");
+const gidoMygtukas = document.getElementById("gidoMygtukas");
 
-if (!GOOGLE_FORMOS_NUORODA) {
-  const smulkiai = document.getElementById("gidasSmulkiai");
-  if (smulkiai) {
-    smulkiai.textContent = "PDF atsidarys naujame lange. Klausimams rašykite info@egdoors.lt";
-  }
+function rodyti(tekstas, busena) {
+  zinute.className = "forma__zinute " + busena;
+  zinute.textContent = tekstas;
+}
+
+if (forma) {
+  forma.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const pastas = forma.pastas.value.trim();
+    const vardas = forma.vardas.value.trim();
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(pastas)) {
+      rodyti("Patikrinkite el. pašto adresą.", "klaida");
+      forma.pastas.focus();
+      return;
+    }
+
+    gidoMygtukas.disabled = true;
+    gidoMygtukas.textContent = "Siunčiama…";
+    rodyti("", "");
+
+    try {
+      const atsakymas = await fetch("/api/gidas", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pastas: pastas, vardas: vardas, miestas: forma.miestas.value }),
+      });
+      const rezultatas = await atsakymas.json().catch(function () { return {}; });
+
+      if (!atsakymas.ok || !rezultatas.ok) {
+        throw new Error(rezultatas.klaida || "Nepavyko išsiųsti");
+      }
+
+      forma.reset();
+      zinute.className = "forma__zinute pavyko";
+      zinute.innerHTML =
+        'Ačiū. Gidas paruoštas: <a href="' + GIDO_FAILAS + '" target="_blank" rel="noopener">atidaryti PDF</a>';
+      window.open(GIDO_FAILAS, "_blank", "noopener");
+    } catch (klaida) {
+      rodyti(klaida.message + ". Arba parašykite info@egdoors.lt", "klaida");
+    } finally {
+      gidoMygtukas.disabled = false;
+      gidoMygtukas.textContent = "Atsisiųsti gidą";
+    }
+  });
 }
 
 /* ------------------------------------------------------------------

@@ -257,8 +257,25 @@
       <h2>7 klausimai gamintojui prieš pasirašant</h2>
       <p>Surašėme septynis klausimus, kuriuos verta užduoti bet kuriam aukštų durų gamintojui: apie varčios rėmą, aukščio ir svorio ribas, vyrius, laboratorijos bandymus, staktos mazgus, apdailos kraštą ir garantiją. Prie kiekvieno parašyta, kokį atsakymą laikyti geru.</p>
       <p class="gidas__sarasas">Gidas tinka ir tada, jei rinksitės ne mus.</p>
-      <a class="mygtukas mygtukas--didelis js-gidas" href="#gidas">Atsisiųsti gidą</a>
-      <p class="gidas__smulkiai" id="gidasSmulkiai">PDF atsidarys naujame lange.</p>
+
+      <form class="forma" id="gidoForma" novalidate>
+        <div class="forma__laukas">
+          <label for="pastas">Jūsų el. paštas</label>
+          <input type="email" id="pastas" name="pastas" required autocomplete="email" placeholder="vardas@pastas.lt">
+        </div>
+        <div class="forma__laukas">
+          <label for="vardas">Vardas, nebūtina</label>
+          <input type="text" id="vardas" name="vardas" autocomplete="name">
+        </div>
+        <div class="forma__spastai" aria-hidden="true">
+          <label for="miestas">Miestas</label>
+          <input type="text" id="miestas" name="miestas" tabindex="-1" autocomplete="off">
+        </div>
+        <button class="mygtukas mygtukas--didelis" type="submit" id="gidoMygtukas">Atsisiųsti gidą</button>
+        <p class="forma__zinute" id="gidoZinute" role="status" aria-live="polite"></p>
+      </form>
+
+      <p class="gidas__smulkiai">Adresą naudosime tik gidui ir atsakymui į Jūsų klausimą.</p>
     </div>
   </section>
 

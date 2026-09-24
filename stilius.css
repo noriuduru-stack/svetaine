@@ -443,6 +443,46 @@ input[type=range]::-moz-range-thumb {
 .gidas__sarasas { color: var(--tekstas); margin-bottom: 34px; }
 .gidas__smulkiai { font-size: 14px; margin: 18px 0 0; }
 
+/* ---------- Forma ---------- */
+.forma {
+  display: grid;
+  gap: 18px;
+  max-width: 420px;
+  margin: 8px auto 0;
+  text-align: left;
+}
+.forma__laukas { display: grid; gap: 7px; }
+.forma__laukas label {
+  font-size: 14px;
+  color: var(--tekstas);
+}
+.forma input[type=email],
+.forma input[type=text] {
+  width: 100%;
+  font: inherit;
+  font-size: 16px;
+  color: var(--tekstas);
+  background: rgba(241, 235, 225, 0.05);
+  border: 1px solid rgba(241, 235, 225, 0.3);
+  border-radius: 0;
+  padding: 13px 15px;
+  transition: border-color .2s, background .2s;
+}
+.forma input::placeholder { color: #8E8477; }
+.forma input:hover { border-color: rgba(241, 235, 225, 0.5); }
+.forma input:focus {
+  outline: none;
+  border-color: var(--auksas);
+  background: rgba(241, 235, 225, 0.08);
+}
+.forma .mygtukas { width: 100%; text-align: center; cursor: pointer; margin-top: 4px; }
+.forma .mygtukas[disabled] { opacity: 0.65; cursor: default; }
+.forma__spastai { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.forma__zinute { font-size: 15px; margin: 0; min-height: 1.2em; }
+.forma__zinute.klaida { color: #F0B77E; }
+.forma__zinute.pavyko { color: var(--tekstas); }
+.forma__zinute a { color: var(--auksas); }
+
 /* ---------- Apačia ---------- */
 .apacia {
   display: grid;
@@ -521,4 +561,5 @@ input[type=range]::-moz-range-thumb {
   .duk summary { font-size: 16.5px; }
   .gidas__vidus { text-align: left; }
   .gidas p { margin-left: 0; }
+  .forma { margin-left: 0; }
 }
