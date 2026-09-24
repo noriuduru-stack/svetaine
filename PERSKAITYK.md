@@ -2,6 +2,25 @@
 
 Vienos temos svetainė šalia egdoors.lt. Paprastas HTML, CSS ir JavaScript, be jokių diegimų.
 
+## Svetainė internete
+
+**Adresas dalintis:** https://aukstos-durys.vercel.app
+
+Tas pats puslapis pasiekiamas ir https://svetaine-eta.vercel.app
+
+Svetainė guli viešoje GitHub saugykloje https://github.com/noriuduru-stack/svetaine ir yra
+sujungta su Vercel paskyra. **Kiekvienas įkėlimas (push) į tą saugyklą per pusę minutės pats
+atnaujina svetainę internete** – nieko spausti nereikia.
+
+Atnaujinimo eiga (tai daro Claude, kai sakoma „išsaugok į GitHub“):
+
+```
+cd svetaine
+git add -A
+git commit -m "kas pasikeitė"
+git push
+```
+
 ## Kaip pasižiūrėti savo kompiuteryje
 
 Aplanke `svetaine` paleisti komandą ir naršyklėje atidaryti http://127.0.0.1:8777

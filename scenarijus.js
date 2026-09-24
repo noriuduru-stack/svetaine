@@ -4,30 +4,27 @@
    1. GIDO NUORODA
    Įrašykite čia savo Google formos adresą tarp kabučių, pvz.:
    const GOOGLE_FORMOS_NUORODA = "https://forms.gle/xxxxxxxx";
-   Kol čia tuščia, mygtukas atidaro laišką į info@egdoors.lt.
+   Kol čia tuščia, mygtukas tiesiog atidaro PDF gidą.
 ------------------------------------------------------------------- */
 const GOOGLE_FORMOS_NUORODA = "";
 
-const ATSARGINIS_LAISKAS =
-  "mailto:info@egdoors.lt" +
-  "?subject=" + encodeURIComponent("Noriu gido „7 klausimai gamintojui“") +
-  "&body=" + encodeURIComponent(
-    "Laba diena,\n\nnorėčiau gauti gidą „Aukštos durys: 7 klausimai gamintojui prieš pasirašant“.\n\nAčiū,\n");
+const GIDO_FAILAS = "gidas-7-klausimai-gamintojui.pdf";
 
 document.querySelectorAll(".js-gidas").forEach(function (m) {
   if (GOOGLE_FORMOS_NUORODA) {
     m.setAttribute("href", GOOGLE_FORMOS_NUORODA);
-    m.setAttribute("target", "_blank");
-    m.setAttribute("rel", "noopener");
-  } else if (m.closest(".gidas")) {
-    m.setAttribute("href", ATSARGINIS_LAISKAS);
+  } else {
+    // Kol formos nėra, mygtukas tiesiog atidaro PDF gidą
+    m.setAttribute("href", GIDO_FAILAS);
   }
+  m.setAttribute("target", "_blank");
+  m.setAttribute("rel", "noopener");
 });
 
 if (!GOOGLE_FORMOS_NUORODA) {
   const smulkiai = document.getElementById("gidasSmulkiai");
   if (smulkiai) {
-    smulkiai.textContent = "Parašykite mums el. paštu ir gidą atsiųsime atgal.";
+    smulkiai.textContent = "PDF atsidarys naujame lange. Klausimams rašykite info@egdoors.lt";
   }
 }
 
